@@ -1,0 +1,53 @@
+[package]
+name = "game_balance"
+version = "0.1.0"
+edition = "2024"
+description = "A minimal, pure closed-loop refinement harness (simulate → measure → update)."
+license = "MIT OR Apache-2.0"
+# repository = "https://github.com/avila-gabriel/game_balance"
+# readme = "README.md"
+# categories = ["game-development", "algorithms", "simulation"]
+# keywords = ["balancing", "simulation", "feedback", "optimization", "games"]
+
+[lib]
+# default layout (src/lib.rs)
+
+[features]
+# Core stays tiny; no mechanics enabled by default.
+default = []
+
+system-production_spend = []
+system-reset_prestige = []
+system-offline_accumulation = []
+system-upgrade_cost_curve = []
+system-draft_choice    = []
+genre-idle = [
+    "system-production_spend",
+    "system-reset_prestige",
+    "system-offline_accumulation",
+    "system-upgrade_cost_curve",
+]
+
+# Optional utility for CI/run metadata (iters, converged flag) if you add it later.
+testkit = []
+
+[dependencies]
+# Pull RNG only when the 'mech-stoch' feature is enabled.
+bevy_prng = { version = "0.11.3", features = ["wyrand"] }
+rand_core = { version = "0.9" }
+
+[dev-dependencies]
+# Tests that directly use WyRand/SeedableRng can rely on dev-deps without
+# forcing downstream users to depend on RNG crates.
+bevy_prng = { version = "0.11.3", features = ["wyrand"] }
+rand_core = "0.9"
+
+[[example]]
+name = "idle"
+path = "examples/idle.rs"
+required-features = ["genre-idle"]
+
+[[example]]
+name = "idle_draft"
+path = "examples/idle_draft.rs"
+required-features = ["genre-idle", "system-draft_choice"]
