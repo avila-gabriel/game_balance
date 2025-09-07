@@ -32,14 +32,14 @@ Think of it as a **sandbox for exploring mechanics**, not a ready-to-ship librar
 
 ## 🚀 How to use  
 
-$$$
+```
 # Check it compiles
 cargo check --all-features
 
 # Run the idle example
 cargo run --example idle \
   --features "genre-idle system-production_spend system-upgrade_cost_curve system-reset_prestige system-offline_accumulation"
-$$$
+```
 
 You’ll see a readout of system parameters (θ) and observed KPIs (π) after balancing.  
 
@@ -52,13 +52,13 @@ Everything is designed to be **extensible**:
 1. **Add a new system**  
    - Create a `src/systems/my_system.rs`.  
    - Define:  
-     $$$rust
+     ```rust
      pub struct Params { … }
      pub struct Env { … }
      pub struct Targets { … }
      pub struct Obs { … }
      pub fn balance_ext(…) -> Outcome<Params, Obs> { … }
-     $$$  
+     ```  
    - Wire it into `src/systems/mod.rs`.  
 
 2. **Add a new genre**  
